@@ -1,0 +1,100 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Vazirmatn', Arial, sans-serif; /* استفاده از فونت فارسی مناسب */
+    direction: rtl;
+    background-color: #f5f5f5; /* رنگ پس‌زمینه صفحه */
+    color: #333; /* رنگ متن */
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4CAF50; /* رنگ سبز برای عنوان‌ها */
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff; /* رنگ پس‌زمینه فرم */
+    padding: 20px;
+    border-radius: 8px; /* گوشه‌های گرد فرم */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* افکت سایه */
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #4CAF50; /* رنگ مرز زمانی فیلد فوکوس شود */
+    outline: none;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049; /* تغییر رنگ زمانی دکمه روی شود */
+}
+
+.survey-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.survey-option:hover {
+    background-color: #f9f9f9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}

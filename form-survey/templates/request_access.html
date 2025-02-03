@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>درخواست دسترسی مجدد</title>
+    <style>
+        body {
+            font-family: 'Vazirmatn', Arial, sans-serif;
+            direction: rtl;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>درخواست دسترسی مجدد</h1>
+        <p>اگر فکر می‌کنید اشتباهی پیش آمده و شما از نظرسنجی محروم شده‌اید، درخواست خود را ارسال کنید.</p>
+        <form method="POST" action="{{ url_for('request_access') }}">
+            <label for="name">نام و نام خانوادگی:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="reason">دلیل:</label>
+            <textarea id="reason" name="reason" rows="4" required></textarea><br><br>
+
+            <button type="submit">ارسال درخواست</button>
+        </form>
+    </div>
+</body>
+</html>

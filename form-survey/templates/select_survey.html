@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>انتخاب فرم نظرسنجی</title>
+    <style>
+        body {
+            font-family: 'Vazirmatn', Arial, sans-serif;
+            direction: rtl;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>انتخاب فرم نظرسنجی</h1>
+        {% if available_surveys %}
+            <ul>
+                {% for survey in available_surveys %}
+                    <li><a href="{{ url_for(survey + '_survey') }}">{{ survey.capitalize() }} Survey</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>شما قبلاً در همه نظرسنجی‌ها شرکت کرده‌اید.</p>
+        {% endif %}
+        <p>
+            اگر فکر می‌کنید اشتباهی پیش آمده و شما از نظرسنجی محروم شده‌اید، 
+            <a href="{{ url_for('request_access') }}">درخواست ثبت مجدد</a> را به مدیر ارسال کنید.
+        </p>
+    </div>
+</body>
+</html>

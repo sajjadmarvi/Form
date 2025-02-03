@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظرسنجی حرم</title>
+    <style>
+        body {
+            font-family: 'IRANSans', Tahoma, Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .optional {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>فرم نظرسنجی حرم</h1>
+        <form method="POST">
+            <!-- سوال 1 -->
+            <label>
+                ۱. ارزیابی شما از کلیت برنامه حرم:
+                <br>
+                <input type="radio" name="hq1" value="ضعیف" required> ضعیف
+                <input type="radio" name="hq1" value="متوسط" required> متوسط
+                <input type="radio" name="hq1" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="hq1_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 2 -->
+            <label>
+                ۲. برنامه سخنرانی:
+                <br>
+                <input type="radio" name="hq2" value="ضعیف" required> ضعیف
+                <input type="radio" name="hq2" value="متوسط" required> متوسط
+                <input type="radio" name="hq2" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="hq2_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 3 -->
+            <label>
+                ۳. برنامه مناجات خوانی:
+                <br>
+                <input type="radio" name="hq3" value="ضعیف" required> ضعیف
+                <input type="radio" name="hq3" value="متوسط" required> متوسط
+                <input type="radio" name="hq3" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="hq3_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 4 -->
+            <label>
+                ۴. برنامه حلقه معرفت:
+                <br>
+                <input type="radio" name="hq4" value="ضعیف" required> ضعیف
+                <input type="radio" name="hq4" value="متوسط" required> متوسط
+                <input type="radio" name="hq4" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="hq4_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 5 -->
+            <label>
+                ۵. برنامه حرم شناسی:
+                <br>
+                <input type="radio" name="hq5" value="ضعیف" required> ضعیف
+                <input type="radio" name="hq5" value="متوسط" required> متوسط
+                <input type="radio" name="hq5" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="hq5_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 6 -->
+            <label>
+                ۶. پذیرایی:
+                <br>
+                <input type="radio" name="hq6" value="ضعیف" required> ضعیف
+                <input type="radio" name="hq6" value="متوسط" required> متوسط
+                <input type="radio" name="hq6" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="hq6_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 7 -->
+            <label>
+                ۷. درصورت توفیق مجدد، چند درصد علاقه به شرکت دارید؟
+                <br>
+                <input type="number" name="hq7" min="0" max="100" required>
+            </label>
+            <br><br>
+
+            <!-- سوال 8 -->
+            <label>
+                ۸. نظر شما در مورد بهتر اجرا شدن این برنامه:
+                <br>
+                <textarea name="hq8" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            </label>
+            <br><br>
+
+            <!-- دکمه ثبت نظر -->
+            <button type="submit">ثبت نظر</button>
+        </form>
+    </div>
+</body>
+</html>

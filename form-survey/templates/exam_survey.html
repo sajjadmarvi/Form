@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظرسنجی امتحانات</title>
+    <style>
+        body {
+            font-family: 'IRANSans', Tahoma, Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .optional {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>فرم نظرسنجی امتحانات</h1>
+        <form method="POST">
+            <!-- سوال 1 -->
+            <label>
+                ۱. فاصله بین امتحانات:
+                <br>
+                <input type="radio" name="q1" value="ضعیف" required> ضعیف
+                <input type="radio" name="q1" value="متوسط" required> متوسط
+                <input type="radio" name="q1" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="q1_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 2 -->
+            <label>
+                ۲. امتحانات جنبی، قبل از شروع ترم برگزار شود؟
+                <br>
+                <input type="radio" name="q2" value="بله" required> بله
+                <input type="radio" name="q2" value="خیر" required> خیر
+            </label>
+            <br>
+            <textarea name="q2_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 3 -->
+            <label>
+                ۳. پاسخ گویی ناظرین به سوالات در جلسه:
+                <br>
+                <input type="radio" name="q3" value="ضعیف" required> ضعیف
+                <input type="radio" name="q3" value="متوسط" required> متوسط
+                <input type="radio" name="q3" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="q3_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 4 -->
+            <label>
+                ۴. سوالات امتحانی در چه سطحی بود؟ بهمراه عنوان درس:
+                <br>
+                <input type="radio" name="q4" value="ضعیف" required> ضعیف
+                <input type="radio" name="q4" value="متوسط" required> متوسط
+                <input type="radio" name="q4" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="q4_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 5 -->
+            <label>
+                ۵. مطالعه مدرسه در زمان امتحانات الزامی باشد:
+                <br>
+                <input type="radio" name="q5" value="بله" required> بله
+                <input type="radio" name="q5" value="خیر" required> خیر
+            </label>
+            <br>
+            <textarea name="q5_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 6 -->
+            <label>
+                ۶. میزان عملکرد شما در امتحان ترم:
+                <br>
+                <input type="radio" name="q6" value="ضعیف" required> ضعیف
+                <input type="radio" name="q6" value="متوسط" required> متوسط
+                <input type="radio" name="q6" value="خوب" required> خوب
+            </label>
+            <br>
+            <textarea name="q6_desc" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            <br><br>
+
+            <!-- سوال 7 -->
+            <label>
+                ۷. علت ضعیف عمل کردن شما در امتحان ترم:
+                <br>
+                <textarea name="q7" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            </label>
+            <br><br>
+
+            <!-- سوال 8 -->
+            <label>
+                ۸. راهکار شما در ارتقای معدل:
+                <br>
+                <textarea name="q8" placeholder="(اختیاری) اگر نظری دارید، به صورت متن بنویسید."></textarea>
+            </label>
+            <br><br>
+
+            <!-- دکمه ثبت نظر -->
+            <button type="submit">ثبت نظر</button>
+        </form>
+    </div>
+</body>
+</html>

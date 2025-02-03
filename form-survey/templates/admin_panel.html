@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>پنل مدیریت</h1>
+    <form method="POST">
+        <label for="username">نام کاربری:</label>
+        <input type="text" id="username" name="username">
+        <label for="password">رمز عبور:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">ورود</button>
+    </form>
+</body>
+</html>

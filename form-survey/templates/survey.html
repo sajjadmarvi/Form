@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم نظر سنجی مدرسه الحجه عج الله</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>بسم الله الرحمن الرحیم</h1>
+    <h2>فرم نظر سنجی مدرسه الحجه عج الله</h2>
+    <form method="POST">
+        <label for="name">نام و نام خانوادگی (اختیاری):</label>
+        <input type="text" id="name" name="name">
+        
+        <h3>ارزیابی امتحانات</h3>
+        <label for="q1">۱. فاصله بین امتحانات:</label>
+        <select id="q1" name="q1">
+            <option value="ضعیف">ضعیف</option>
+            <option value="متوسط">متوسط</option>
+            <option value="خوب">خوب</option>
+        </select>
+        <textarea name="q1_comment" placeholder="نظر خود را بنویسید (اختیاری)"></textarea>
+
+        <label for="q2">۲. امتحانات جنبی، قبل از شروع ترم برگزار شود؟</label>
+        <select id="q2" name="q2">
+            <option value="بله">بله</option>
+            <option value="خیر">خیر</option>
+        </select>
+        <textarea name="q2_comment" placeholder="نظر خود را بنویسید (اختیاری)"></textarea>
+
+        <label for="q3">۳. پاسخ گویی ناظرین به سوالات در جلسه:</label>
+        <select id="q3" name="q3">
+            <option value="ضعیف">ضعیف</option>
+            <option value="متوسط">متوسط</option>
+            <option value="خوب">خوب</option>
+        </select>
+        <textarea name="q3_comment" placeholder="نظر خود را بنویسید (اختیاری)"></textarea>
+
+        <label for="q4">۴. سوالات امتحانی در چه سطحی بود؟ بهمراه عنوان درس:</label>
+        <textarea id="q4" name="q4"></textarea>
+
+        <label for="q5">۵. مطالعه مدرسه در زمان امتحانات الزامی باشد:</label>
+        <select id="q5" name="q5">
+            <option value="بله">بله</option>
+            <option value="خیر">خیر</option>
+        </select>
+        <textarea name="q5_comment" placeholder="نظر خود را بنویسید (اختیاری)"></textarea>
+
+        <label for="q6">۶. میزان عملکرد شما در امتحان ترم:</label>
+        <select id="q6" name="q6">
+            <option value="ضعیف">ضعیف</option>
+            <option value="متوسط">متوسط</option>
+            <option value="خوب">خوب</option>
+        </select>
+        <textarea name="q6_comment" placeholder="نظر خود را بنویسید (اختیاری)"></textarea>
+
+        <label for="q7">۷. علت ضعیف عمل کردن شما در امتحان ترم:</label>
+        <textarea id="q7" name="q7"></textarea>
+
+        <label for="q8">۸. راهکار شما در ارتقای معدل:</label>
+        <textarea id="q8" name="q8"></textarea>
+
+        <h3>ارزیابی برنامه حرم</h3>
+        <label for="hq1">۱. ارزیابی شما از کلیت برنامه حرم:</label>
+        <textarea id="hq1" name="hq1"></textarea>
+
+        <label for="hq2">۲. برنامه سخنرانی:</label>
+        <textarea id="hq2" name="hq2"></textarea>
+
+        <label for="hq3">۳. برنامه مناجات خوانی:</label>
+        <textarea id="hq3" name="hq3"></textarea>
+
+        <label for="hq4">۴. برنامه حلقه معرفت:</label>
+        <textarea id="hq4" name="hq4"></textarea>
+
+        <label for="hq5">۵. برنامه حرم شناسی:</label>
+        <textarea id="hq5" name="hq5"></textarea>
+
+        <label for="hq6">۶. پذیرایی:</label>
+        <textarea id="hq6" name="hq6"></textarea>
+
+        <label for="hq7">۷. (لطفا عدد درصد را به درستی وارد کنید) درصورت توفیق مجدد، چند درصد علاقه به شرکت دارید؟</label>
+        <input type="number" id="hq7" name="hq7" min="0" max="100">
+
+        <label for="hq8">۸. نظر شما در مورد بهتر اجرا شدن این برنامه:</label>
+        <textarea id="hq8" name="hq8"></textarea>
+
+        <p>از پاسخ های خود مطمئن شوید زیرا پس از زدن دکمه ی ثبت دیگر امکان تغییر و یا دوباره ثبت نظر نمی باشد.</p>
+        <button type="submit">ثبت نظر</button>
+    </form>
+</body>
+</html>
