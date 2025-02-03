@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد مدیریت</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .actions button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .actions button.approve {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .actions button.reject {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>داشبورد مدیریت</h2>
+
+        <h3>نظرسنجی امتحانات</h3>
+        <table>
+            <tr>
+                <th>نام</th>
+                <th>IP</th>
+                <th>پاسخ‌ها</th>
+            </tr>
+            {% for resp in exam_responses %}
+            <tr>
+                <td>{{ resp.name }}</td>
+                <td>{{ resp.ip }}</td>
+                <td>{{ resp.responses | safe }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h3>نظرسنجی حرم</h3>
+        <table>
+            <tr>
+                <th>نام</th>
+                <th>IP</th>
+                <th>پاسخ‌ها</th>
+            </tr>
+            {% for resp in haram_responses %}
+            <tr>
+                <td>{{ resp.name }}</td>
+                <td>{{ resp.ip }}</td>
+                <td>{{ resp.responses | safe }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h3>درخواست‌های دسترسی مجدد</h3>
+        <table>
+            <tr>
+                <th>نام</th>
+                <th>IP</th>
+                <th>دلیل</th>
+                <th>عملیات</th>
+            </tr>
+            {% for req in access_requests %}
+            <tr>
+                <td>{{ req.name }}</td>
+                <td>{{ req.ip }}</td>
+                <td>{{ req.reason }}</td>
+                <td class="actions">
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="ip" value="{{ req.ip }}">
+                        <input type="hidden" name="action" value="approve">
+                        <button type="submit" class="approve">قبول</button>
+                    </form>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="ip" value="{{ req.ip }}">
+                        <input type="hidden" name="action" value="reject">
+                        <button type="submit" class="reject">رد</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
