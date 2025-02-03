@@ -11,7 +11,7 @@ app.secret_key = 'your_secret_key'
 # تنظیمات API و چت
 TOKEN = 'bot333725:b380f262-c3d2-4433-a16b-28dbc83c10ad'
 CHAT_ID = '@post_sender'
-TELEGRAM_BOT_TOKEN = '7507159926:AAGEBvt8oRNhlrNRqrxBoHQluDgAm1_o01Q'
+TELEGRAM_BOT_TOKEN = '8000764348:AAEytputhjTO8Sp7QA939fUCm8ja6YQI23I'
 TELEGRAM_ADMIN_CHAT_ID = '167514573'
 API_URL = "https://eitaayar.ir/api"
 
@@ -71,12 +71,66 @@ def index():
         return redirect(url_for('select_survey'))
     return render_template('index.html')
 
+# صفحه بعدی فرم و اختیاری بودن وارد کردن نام و نام خانوادگی
+@app.route('/select_survey', methods=['POST'])
+def next_page():
+    return render_template('select_survey.html')  
+
+# صفحه مدیریت
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    # اعتبارسنجی ورود مدیر
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username == 'mrhjf' and password == 'smb110':
+            session['admin_logged_in'] = True
+            return redirect(url_for('admin_dashboard'))
+        else:
+            flash("نام کاربری یا رمز عبور اشتباه است.", "danger")
+    return render_template('admin_panel.html')
+
+# داشبورد مدیریت
+@app.route('/admin/dashboard', methods=['GET', 'POST'])
+def admin_dashboard():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin'))
+
+    # بارگزاری داده‌ها
+    completed_surveys = load_json_file('data/completed_surveys.json', {})
+    exam_responses = load_json_file('data/exam_responses.json', [])
+    haram_responses = load_json_file('data/haram_responses.json', [])
+    access_requests = load_json_file('data/access_requests.json', [])
+
+    if request.method == 'POST':
+        action = request.form.get('action')
+        ip = request.form.get('ip')
+
+        if action == 'approve':
+            for survey in ['exam', 'haram']:
+                if ip in completed_surveys.get(survey, []):
+                    completed_surveys[survey].remove(ip)
+            with open('data/completed_surveys.json', 'w') as file:
+                json.dump(completed_surveys, file)
+            flash(f"درخواست دسترسی کاربر با IP: {ip} قبول شد.", "success")
+
+        elif action == 'reject':
+            flash(f"درخواست دسترسی کاربر با IP: {ip} رد شد.", "warning")
+
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template(
+        'admin_dashboard.html',
+        exam_responses=exam_responses,
+        haram_responses=haram_responses,
+        access_requests=access_requests
+    )
+
 # انتخاب نظرسنجی
 @app.route('/select_survey')
 def select_survey():
     ip = session.get('ip', '')
     completed_surveys = load_json_file('data/completed_surveys.json', {})
-    # بررسی اینکه آیا کاربر قبلاً همه نظرسنجی‌ها را تکمیل کرده است
     if ip in completed_surveys.get("exam", []) and ip in completed_surveys.get("haram", []):
         flash("شما قبلاً در همه نظرسنجی‌ها شرکت کرده‌اید.", "info")
         return redirect(url_for('index'))
@@ -142,13 +196,6 @@ def exam_survey():
         if detailed_text != "📝 **پاسخ‌های تشریحی نظرسنجی امتحانات**:\n\n":
             send_message_to_eita(CHAT_ID, detailed_text)
             send_telegram_message(TELEGRAM_ADMIN_CHAT_ID, detailed_text)
-        
-        # ارسال تعداد شرکت‌کنندگان به مدیر
-        participant_count = len(completed_surveys.get("exam", []))
-        participants_info = "\n".join([f"👤 {resp['name']} | 🌐 {resp['ip']}" for resp in all_responses])
-        send_telegram_message(TELEGRAM_ADMIN_CHAT_ID, f"👥 **تعداد شرکت‌کنندگان نظرسنجی امتحانات**: {participant_count}\n{participants_info}", 
-                              keyboard=[[{"text": "مشاهده جزئیات", "callback_data": "view_exam_details"}]])
-        
         flash('نظر شما ثبت شد!', 'success')
         return redirect(url_for('select_survey'))
     return render_template('exam_survey.html')
@@ -211,13 +258,6 @@ def haram_survey():
         if detailed_text != "📝 **پاسخ‌های تشریحی نظرسنجی حرم**:\n\n":
             send_message_to_eita(CHAT_ID, detailed_text)
             send_telegram_message(TELEGRAM_ADMIN_CHAT_ID, detailed_text)
-        
-        # ارسال تعداد شرکت‌کنندگان به مدیر
-        participant_count = len(completed_surveys.get("haram", []))
-        participants_info = "\n".join([f"👤 {resp['name']} | 🌐 {resp['ip']}" for resp in all_responses])
-        send_telegram_message(TELEGRAM_ADMIN_CHAT_ID, f"👥 **تعداد شرکت‌کنندگان نظرسنجی حرم**: {participant_count}\n{participants_info}", 
-                              keyboard=[[{"text": "مشاهده جزئیات", "callback_data": "view_haram_details"}]])
-        
         flash('نظر شما ثبت شد!', 'success')
         return redirect(url_for('select_survey'))
     return render_template('haram_survey.html')
@@ -233,11 +273,14 @@ def request_access():
         send_message_to_eita(CHAT_ID, message)
         keyboard = [[{"text": "قبول", "callback_data": f"approve:{ip}"}, {"text": "رد", "callback_data": f"reject:{ip}"}]]
         send_telegram_message(TELEGRAM_ADMIN_CHAT_ID, message, keyboard=keyboard)
+        access_requests = load_json_file('data/access_requests.json', [])
+        access_requests.append({"name": name, "ip": ip, "reason": reason})
+        with open('data/access_requests.json', 'w') as file:
+            json.dump(access_requests, file)
         flash("درخواست شما ارسال شد و به زودی بررسی خواهد شد.", "info")
         return redirect(url_for('index'))
     return render_template('request_access.html')
 
-# Endpoint برای مدیریت درخواست‌ها در ربات تلگرام
 # Endpoint برای مدیریت درخواست‌ها در ربات تلگرام
 @app.route('/telegram_webhook', methods=['POST'])
 def telegram_webhook():
@@ -246,57 +289,19 @@ def telegram_webhook():
         query = data['callback_query']
         chat_id = query['message']['chat']['id']
         callback_data = query['data']
-
-        # پردازش دکمه‌های مشاهده جزئیات
-        if callback_data == "view_exam_details":
-            exam_responses = load_json_file('data/exam_responses.json', [])
-            details = ""
-            for resp in exam_responses:
-                name = resp['name']
-                ip = resp['ip']
-                details += f"👤 {name} | 🌐 {ip}\n"
-                for q, answer in resp['responses'].items():
-                    if q.endswith("_desc") and answer:  # فقط پاسخ‌های تشریحی
-                        question_text = q.replace("_desc", "")
-                        details += f"  - {question_text}: {answer}\n"
-                details += "\n"  # خط خالی برای جداسازی کاربران
-            send_telegram_message(chat_id, f"📋 **جزئیات شرکت‌کنندگان نظرسنجی امتحانات**:\n{details}")
-
-        elif callback_data == "view_haram_details":
-            haram_responses = load_json_file('data/haram_responses.json', [])
-            details = ""
-            for resp in haram_responses:
-                name = resp['name']
-                ip = resp['ip']
-                details += f"👤 {name} | 🌐 {ip}\n"
-                for q, answer in resp['responses'].items():
-                    if q.endswith("_desc") and answer:  # فقط پاسخ‌های تشریحی
-                        question_text = q.replace("_desc", "")
-                        details += f"  - {question_text}: {answer}\n"
-                details += "\n"  # خط خالی برای جداسازی کاربران
-            send_telegram_message(chat_id, f"📋 **جزئیات شرکت‌کنندگان نظرسنجی حرم**:\n{details}")
-
-        # پردازش دکمه‌های قبول/رد درخواست دسترسی مجدد
-        elif callback_data.startswith('approve:'):
+        if callback_data.startswith('approve:'):
             ip = callback_data.split(':')[1]
             completed_surveys = load_json_file('data/completed_surveys.json', {})
-            removed = False
             for survey in ['exam', 'haram']:
                 if ip in completed_surveys.get(survey, []):
                     completed_surveys[survey].remove(ip)
-                    removed = True
-            if removed:
-                with open('data/completed_surveys.json', 'w') as file:
-                    json.dump(completed_surveys, file)
-                send_telegram_message(chat_id, f"درخواست دسترسی کاربر با IP: {ip} قبول شد.")
-            else:
-                send_telegram_message(chat_id, f"کاربر با IP: {ip} قبلاً از لیست حذف شده است.")
-
+            with open('data/completed_surveys.json', 'w') as file:
+                json.dump(completed_surveys, file)
+            send_telegram_message(chat_id, f"درخواست دسترسی کاربر با IP: {ip} قبول شد.")
         elif callback_data.startswith('reject:'):
             ip = callback_data.split(':')[1]
             send_telegram_message(chat_id, f"درخواست دسترسی کاربر با IP: {ip} رد شد.")
-
     return '', 200
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=9000)
